@@ -21,23 +21,22 @@ public class ChatManager : MonoBehaviour
         string userText = inputField.text.Trim();
         if (string.IsNullOrEmpty(userText)) return;
 
+        // 사용자 채팅 출력
         AddChat("나", userText);
         inputField.text = "";
 
-        // 예시로 AI 응답도 추가
-        Invoke(nameof(AddAIResponse), 0.5f);
+        // GPT 처리 호출
+        FindObjectOfType<ChatGPTTest>().Send();
     }
 
-    private void AddAIResponse()
-    {
-        AddChat("카이엔 아르벨", "그런 말투로 말하면 입맛 떨어진다니까?");
-    }
 
     public void AddChat(string speaker, string text)
     {
         GameObject chatGO = Instantiate(chatBubblePrefab, contentParent);
         ChatBubbleUI bubble = chatGO.GetComponent<ChatBubbleUI>();
-        bubble.SetData(speaker, text);
+
+        bool isUser = speaker == "나";
+        bubble.SetData(speaker, text, isUser);
 
         // 스크롤 아래로 자동 이동
         Canvas.ForceUpdateCanvases();

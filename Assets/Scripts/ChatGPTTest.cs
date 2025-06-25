@@ -44,8 +44,38 @@ public class ChatGPTTest : MonoBehaviour
         _messages.Add(new Message(Role.System, systemMessage));
     }
 
-
     public async void Send()
+    {
+        string prompt = PromptField.text;
+        if (string.IsNullOrEmpty(prompt)) return;
+
+        PromptField.text = "";
+        SendButton.interactable = false;
+
+        // 1. 사용자 메시지 추가
+        _messages.Add(new Message(Role.User, prompt));
+
+        // 2. GPT 요청
+        var chatRequest = new ChatRequest(_messages, Model.GPT4o);
+        var (npcResponse, response) = await _api.ChatEndpoint.GetCompletionAsync<NpcResponse>(chatRequest);
+
+        Debug.Log(npcResponse.ReplyMessage);
+
+        // 3. 응답 메시지 처리
+        _messages.Add(new Message(Role.Assistant, response.FirstChoice.Message));
+        FindObjectOfType<ChatManager>().AddChat("타케바 유카리", npcResponse.ReplyMessage);
+
+
+        // 4. 음성 출력
+        //PlayTTS(npcResponse.ReplyMessage);
+
+        // 5. 이미지 생성 (필요시)
+        // GenerateImage(npcResponse.StoryImageDescription);
+
+        SendButton.interactable = true;
+    }
+
+    public async void Send2()
     {
         // 0. 프롬프트(=AI에게 원하는 명령을 적은 텍스트)를 읽어온다.
         string prompt = PromptField.text;
@@ -91,6 +121,7 @@ public class ChatGPTTest : MonoBehaviour
         // 9. 스토리 이미지 생성
         //GenerateImage(npcResponse.StoryImageDescription);
     }
+
 
 
     private async void PlayTTS(string text)
