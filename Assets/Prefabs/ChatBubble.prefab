@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 7709867626675773923}
   - component: {fileID: 1897147969312734853}
   - component: {fileID: 5782802256623354833}
+  - component: {fileID: -1120791949605161091}
   m_Layer: 5
   m_Name: ChatBubble
   m_TagString: Untagged
@@ -213,6 +214,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-1120791949605161091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745487716309067084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af86db7f99fd1454a9357faf0fb286fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerNameText: {fileID: 8099956596411648106}
+  dialogueText: {fileID: 7159170132079664080}
 --- !u!1 &5544801219273491126
 GameObject:
   m_ObjectHideFlags: 0
